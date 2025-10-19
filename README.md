@@ -19,6 +19,8 @@ If you are developing a production application, we recommend using TypeScript wi
 ## to run the project 
 
  cd my-project
+ 
  npm i
+ 
  npm run dev 
 
