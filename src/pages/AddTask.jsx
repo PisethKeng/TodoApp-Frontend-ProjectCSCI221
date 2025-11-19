@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import TaskCreation from "../components/taskCreation";
+import TaskCreation from "../components/TaskCreation";
 
 export default function AddTask() {
   const [tasks, setTasks] = useState(() => {
