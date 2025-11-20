@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-// Added styling classes for better UI logic stays the same 
-
 export default function TaskCreation({ onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -34,7 +32,7 @@ export default function TaskCreation({ onCreate }) {
     <form
       onSubmit={handleSubmit}
     >
-      <div className="mx-auto mt-6 max-w-2xl rounded-2xl bg-white p-6 shadow-sm space-y-4">
+      <div className="mx-auto mt-6 rounded-2xl bg-white p-7 shadow-sm space-y-4">
         <label className="flex flex-col gap-2 text-base font-medium text-slate-600">
           <span>Title</span>
           <input
@@ -48,7 +46,7 @@ export default function TaskCreation({ onCreate }) {
         </label>
       </div>
 
-      <div className="mx-auto mt-6 max-w-2xl rounded-2xl bg-white p-6 shadow-sm space-y-4">
+      <div className="mx-auto mt-6 rounded-2xl bg-white p-7 shadow-sm space-y-4">
         <div>
           <label className="flex flex-col gap-2 text-base font-medium text-slate-600">
             <span>Description</span>
@@ -56,7 +54,7 @@ export default function TaskCreation({ onCreate }) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Task description"
-              className="w-full min-h-[80px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]"
+              className="w-full min-h-[80px] h-[130px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]"
             ></textarea>
           </label>
         </div>
