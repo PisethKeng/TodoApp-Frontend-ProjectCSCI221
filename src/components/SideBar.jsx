@@ -13,10 +13,13 @@ export default function SideBar() {
     //   </div>
     // </div>
 
-    <div className="flex flex-col items-start h-195 rounded-2xl bg-white py-8 px-10 shadow-sm">
+    
+      // Added more size to the sidebar. 
+
+    <div className="w-[250px] flex flex-col items-start h-195 rounded-2xl bg-white py-4 px-3 px-10 shadow-sm">
       <h2 className="text-[28px] font-bold mb-6">To do list</h2>
       <hr className="border-dotted border-black w-full mb-6" />
-      <div className="w-full text-black font-semibold text-[18px] space-y-2">
+      <div className="w-full text-black font-semibold text-[18px] space-y-4">
         <p className="transition duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Dashboard</p>
         <p className="transition duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Add task</p>
         <p className="transition duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Calendar</p>
