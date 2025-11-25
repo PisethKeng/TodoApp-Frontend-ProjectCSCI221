@@ -1,15 +1,36 @@
 import React from 'react'
+import { Link } from 'react-router'
 
 export default function SideBar() {
   return (
-    <div className="column fixed left-10 top-10 h-120 w-3xs flex flex-col items-center p-4 rounded-xl shadow-lg">
-      <h2 className="fixed left-15 text-lg font-semibold mb-4">To do list</h2>
-      <hr className="mt-8 border-dotted border-black w-full "></hr>
-      <div className="mt-8 w-full text-black p-2 left-5 mb-3 text-start space-y-3">
-        <p className="hover:bg-green-600 p-4 ml-4 rounded-2xl">Dashboard</p>
-        <p className="hover:bg-green-600 p-4 ml-4 rounded-2xl">Add task</p>
-        <p className="hover:bg-green-600 p-4 ml-4 rounded-2xl">Calendar</p>
-      </div>
-    </div>
+    <>
+        {/* Sidebar */}
+        <div className="h-[480px] w-[240px] bg-white flex flex-col items-center p-4 rounded-2xl shadow-xl">
+          {/* Title */}
+          <h2 className="text-xl font-semibold mb-3 self-start ml-4">
+            To do List
+          </h2>
+          <hr className="border border-dotted border-gray-300 w-full mb-6" />
+
+          {/* Menu Items */}
+          <div className="w-full text-black px-2 space-y-4">
+            <Link to="/">
+              <p className="hover:bg-green-600 hover:text-white transition p-4 rounded-2xl cursor-pointer">
+                Dashboard
+              </p>
+            </Link>
+            <Link to="/add-task">
+              <p className="hover:bg-green-600 hover:text-white transition p-4 rounded-2xl cursor-pointer">
+                Add task
+              </p>
+            </Link>
+            <Link to="/calendar">
+              <p className="hover:bg-green-600 hover:text-white transition p-4 rounded-2xl cursor-pointer">
+                Calendar
+              </p>
+            </Link>
+          </div>
+        </div>
+    </>
   )
 }
