@@ -20,10 +20,10 @@ export default function SideBar() {
       <h2 className="text-[28px] font-bold mb-6">To do list</h2>
       <hr className="border-dotted border-black w-full mb-6" />
       <div className="w-full text-black font-semibold text-[18px] space-y-4">
-        <Link to="/dashboard" className="block">
+        <Link to="/" className="block">
           <p className="duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Dashboard</p>
         </Link>
-        <Link to="/add-task" className="block">
+        <Link to="/Addtask" className="block">
           <p className="duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Add task</p>
         </Link>
         <Link to="/calendar" className="block">
