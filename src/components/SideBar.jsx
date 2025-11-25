@@ -20,9 +20,15 @@ export default function SideBar() {
       <h2 className="text-[28px] font-bold mb-6">To do list</h2>
       <hr className="border-dotted border-black w-full mb-6" />
       <div className="w-full text-black font-semibold text-[18px] space-y-4">
-        <p className="transition duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Dashboard</p>
-        <p className="transition duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Add task</p>
-        <p className="transition duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Calendar</p>
+        <Link to="/dashboard" className="block">
+          <p className="duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Dashboard</p>
+        </Link>
+        <Link to="/add-task" className="block">
+          <p className="duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Add task</p>
+        </Link>
+        <Link to="/calendar" className="block">
+          <p className="duration-500 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Calendar</p>
+        </Link>
       </div>
     </div>
   )
