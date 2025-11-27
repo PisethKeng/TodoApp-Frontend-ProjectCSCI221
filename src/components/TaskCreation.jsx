@@ -3,8 +3,8 @@ import { useState } from "react";
 export default function TaskCreation({ onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [category, setCategory] = useState("");
+  const [priority, setPriority] = useState("medium");
+  const [category, setCategory] = useState("other");
   const [duedate, setDuedate] = useState("");
 
   const clear = () => {
