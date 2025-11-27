@@ -1,7 +1,20 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import SideBar from '../components/SideBar'
-import TaskCreation from '../components/TaskCreation'
+import { useTasks } from "../context/TaskProvider";
+import Dashboard from './dashboard';
+
 export default function Home() {
+  const [ priorityValue, setPriorityValue ] = useState("Medium");
+  const [ categoryValue, setCategoryValue ] = useState("others");
+  const [ sortValue, setSortValue ] = useState("All");
+  const { tasks, removeTask } = useTasks();
+  const [ taskStatus, setSetStatus ] = useState(tasks.length > 0);
+
+  useEffect(() => {
+    setSetStatus(tasks.length > 0);
+  }, [tasks]);
+
   return (
     <>
     <div className="min-h-screen flex justify-start items-start bg-[#FBFBF9]">
@@ -15,7 +28,7 @@ export default function Home() {
             Dashboard
           </div>
           {/* Priority / Filters card */}
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200 mb-6">
             {/* Title */}
             <h3 className="text-base font-semibold text-gray-800 mb-4">
               Task Filters
@@ -29,6 +42,7 @@ export default function Home() {
                 <select
                   defaultValue="all"
                   className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none"
+                  onChange={e => setPriorityValue(e.target.value)}
                 >
                   <option value="all">All</option>
                   <option value="high">High</option>
@@ -43,12 +57,14 @@ export default function Home() {
                 <select
                   defaultValue="all"
                   className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none"
+                  onChange={e => setCategoryValue(e.target.value)}
                 >
                   <option value="all">All</option>
                   <option value="personal">Personal</option>
                   <option value="work">Work</option>
                   <option value="study">Study</option>
                   <option value="health">Health</option>
+                  <option value="others">Others</option>
                 </select>
               </div>
 
@@ -58,6 +74,7 @@ export default function Home() {
                 <select
                   defaultValue="all"
                   className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none"
+                  onChange={e => setSortValue(e.target.value)}
                 >
                   <option value="all">All</option>
                   <option value="duedate">Due Date</option>
@@ -66,13 +83,22 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* Task display box - placeholder for rendered tasks (logic to be added later :) ) */}
-          <div className="bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-200 mt-6">
-            <h3 className="text-base font-semibold text-gray-800 mb-4">Tasks</h3>
-            <div id="task-list-placeholder" className="min-h-[120px] flex items-center justify-center text-gray-500">
-              No tasks to display
+          {/* Task display box */}
+          {!taskStatus && (
+            <div className="h-[545px] bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-200 mt-6">
+              <h3 className="text-base font-semibold text-gray-800">Tasks</h3>
+              <div id="task-list-placeholder" className="h-full flex flex-col items-center justify-center text-gray-500 text-xl">
+                No tasks to display
+              </div>
             </div>
-          </div>
+          )}
+          {taskStatus && (
+            <div className="max-h-[545px] overflow-y-auto space-y-4">
+              {tasks.map(task => (
+                <Dashboard key={task.id} tasks={task} removeTask={removeTask} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

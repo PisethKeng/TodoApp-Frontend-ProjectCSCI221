@@ -9,8 +9,16 @@ import { TaskProvider } from './context/TaskProvider'
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={
+          <TaskProvider>
+            <Home />
+          </TaskProvider>
+          } />
+        <Route path="/dashboard" element={
+          <TaskProvider>
+            <Dashboard />
+          </TaskProvider>
+          } />
         <Route path="/addtask" element={
           <TaskProvider>
             <AddTask />
