@@ -5,15 +5,35 @@ import { useTasks } from "../context/TaskProvider";
 import Dashboard from './dashboard';
 
 export default function Home() {
-  const [ priorityValue, setPriorityValue ] = useState("Medium");
-  const [ categoryValue, setCategoryValue ] = useState("others");
-  const [ sortValue, setSortValue ] = useState("All");
-  const { tasks, removeTask } = useTasks();
-  const [ taskStatus, setSetStatus ] = useState(tasks.length > 0);
+  const [ priorityValue, setPriorityValue ] = useState("all");
+  const [ categoryValue, setCategoryValue ] = useState("all");
+  const [ sortValue, setSortValue ] = useState("all");
+  const { tasks, removeTask, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle } = useTasks();
+  const [ filterTasks, setFilterTasks ] = useState(tasks);
+  const [ taskStatus, setTaskStatus ] = useState(tasks.length > 0);
 
   useEffect(() => {
-    setSetStatus(tasks.length > 0);
-  }, [tasks]);
+    let result = [...tasks];
+
+    if (priorityValue !== "all") {
+      result = getTasksByPriority(priorityValue, result);
+    }
+
+    if (categoryValue !== "all") {
+      result = getTasksByCategory(categoryValue, result);
+    }
+
+    if (sortValue === "duedate") {
+      result = getTasksByDueDate(result);
+    } 
+    else if (sortValue === "title") {
+      result = getTasksByTitle(result)
+    }
+
+    setFilterTasks(result);
+    setTaskStatus(result.length > 0);
+
+  }, [tasks, priorityValue, categoryValue, sortValue, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle]);
 
   return (
     <>
@@ -94,7 +114,7 @@ export default function Home() {
           )}
           {taskStatus && (
             <div className="max-h-[545px] overflow-y-auto space-y-4">
-              {tasks.map(task => (
+              {filterTasks.map(task => (
                 <Dashboard key={task.id} tasks={task} removeTask={removeTask} />
               ))}
             </div>
