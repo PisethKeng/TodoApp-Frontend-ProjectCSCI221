@@ -55,7 +55,7 @@ export default function EditTask() {
       ...form,
     });
 
-    navigate("/"); // or "/dashboard" or wherever your main task list is
+    navigate("/"); 
   };
 
   const handleCancel = () => {

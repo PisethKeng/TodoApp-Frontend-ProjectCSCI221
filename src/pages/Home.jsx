@@ -8,7 +8,7 @@ export default function Home() {
   const [ priorityValue, setPriorityValue ] = useState("all");
   const [ categoryValue, setCategoryValue ] = useState("all");
   const [ sortValue, setSortValue ] = useState("all");
-  const { tasks, removeTask, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle } = useTasks();
+  const { tasks, removeTask, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle, toggleTaskCompleted } = useTasks();
   const [ filterTasks, setFilterTasks ] = useState(tasks);
   const [ taskStatus, setTaskStatus ] = useState(tasks.length > 0);
 
@@ -115,7 +115,7 @@ export default function Home() {
           {taskStatus && (
             <div className="max-h-[545px] overflow-y-auto space-y-4">
               {filterTasks.map(task => (
-                <Dashboard key={task.id} tasks={task} removeTask={removeTask} />
+                <Dashboard key={task.id} tasks={task} removeTask={removeTask} toggleTaskCompleted={toggleTaskCompleted} />
               ))}
             </div>
           )}

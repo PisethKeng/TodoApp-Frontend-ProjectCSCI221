@@ -1,18 +1,24 @@
-import { Trash2, SquarePen, CalendarDays, Circle } from "lucide-react";
+import { Trash2, SquarePen, CalendarDays, CircleCheckBig } from "lucide-react";
+import { useNavigate } from "react-router";
 
-export default function Dashboard({ tasks, removeTask }) {
-  const { id, title, description, category, priority, duedate } = { ...tasks };
+export default function Dashboard({ tasks, removeTask, toggleTaskCompleted }) {
+  const navigate = useNavigate();
+  const { id, title, description, category, priority, duedate, completed } = { ...tasks };
 
   return (
     <div className="w-full mb-4">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex items-center justify-between gap-4 hover:shadow-md transition">
         <div className="flex items-start gap-4">
-          <button className="mt-1 text-teal-600 hover:text-teal-700 transition">
-            <Circle className="w-6 h-6" />
+          <button className="mt-1 text-teal-600 hover:text-teal-700 transition"
+          onClick={() => toggleTaskCompleted(id)}
+          >
+            <CircleCheckBig className="w-6 h-6" />
           </button>
 
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 leading-tight">
+            <h3 
+            className={`text-lg font-semibold text-gray-900 leading-tight ${completed ? "text-gray-400 line-through" : "text-gray-900"}`}
+            >
               {title}
             </h3>
             <p className="text-sm text-gray-500 mt-1">
@@ -42,7 +48,9 @@ export default function Dashboard({ tasks, removeTask }) {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="text-blue-500 hover:bg-blue-50 p-2 rounded-lg transition">
+          <button className="text-blue-500 hover:bg-blue-50 p-2 rounded-lg transition"
+            onClick={() => navigate("/EditTask/" + id)}
+          >
             <SquarePen className="w-5 h-5" />
           </button>
           <button
