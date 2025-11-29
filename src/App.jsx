@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import AddTask from './pages/AddTask'
 import Calendar from './pages/Calendar'
 import Dashboard from './pages/dashboard'
+import EditTask from './pages/EditTask'
 import { TaskProvider } from './context/TaskProvider'
 
 function App() {
@@ -25,6 +26,11 @@ function App() {
           </TaskProvider>
         } />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/EditTask/:id" element={
+          <TaskProvider>
+            <EditTask />
+          </TaskProvider>
+        } />
       </Routes>
   )
 }
