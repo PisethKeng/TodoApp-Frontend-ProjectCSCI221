@@ -30,7 +30,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white shadow-lg p-8 w-full max-w-md rounded-xl">
-        <h2 className="text-2xl font-bold mb-6 text-center">Welcome Back 👋</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Start Managing Your Tasks</h2>
 
         <form onSubmit={handleLogin}>
           <label className="block text-sm font-semibold">Email</label>
