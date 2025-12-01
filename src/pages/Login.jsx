@@ -8,9 +8,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const validEmail = "test@example.com";
-  const validPassword = "123456";
-
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -19,12 +16,24 @@ export default function Login() {
       return;
     }
 
-    if (email === validEmail && password === validPassword) {
-      localStorage.setItem("user", email);
-      navigate("/dashboard");
-    } else {
+    // Get stored users
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Validate user
+    const foundUser = storedUsers.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (!foundUser) {
       setError("Invalid email or password.");
+      return;
     }
+
+    // Save current logged-in user
+    localStorage.setItem("currentUser", JSON.stringify(foundUser));
+
+    // Redirect to homepage
+    navigate("/");
   };
 
   return (

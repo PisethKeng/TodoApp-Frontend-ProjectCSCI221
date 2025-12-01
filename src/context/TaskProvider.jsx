@@ -5,14 +5,19 @@ const TaskContext = createContext();
 export const useTasks = () => useContext(TaskContext);
 
 export function TaskProvider({ children }) {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const userKey = currentUser ? `tasks_${currentUser.email}` : "tasks";
+
     const [tasks, setTasks] = useState(() => {
-        const storedTasks = localStorage.getItem("tasks");
+        const storedTasks = localStorage.getItem(userKey);
         return storedTasks ? JSON.parse(storedTasks) : [];
     });
 
     useEffect(() => {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }, [tasks]);
+        if (currentUser) {
+            localStorage.setItem(userKey, JSON.stringify(tasks));
+        }
+    }, [tasks, userKey, currentUser]);
 
     const addTask = (newTask) => {
         const task = {
@@ -39,18 +44,16 @@ export function TaskProvider({ children }) {
         return tasksToSort.sort((a, b) => {
             if (a.completed && !b.completed) return 1;
             if (!a.completed && b.completed) return -1;
-        })
-    }
+        });
+    };
 
     const getTasksByPriority = (priority, tasks) => {
         return tasks.filter(task => task.priority === priority);
     };
 
-
     const getTasksByCategory = (category, tasks) => {
         return tasks.filter(task => task.category === category);
     };
-
 
     const getTasksByDueDate = (tasks) => {
         return [...tasks].sort((a, b) => {
@@ -70,16 +73,15 @@ export function TaskProvider({ children }) {
         });
     };
     
-    // added task complete function
     const toggleTaskCompleted = (taskId) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, completed: !task.completed }
-          : task
-      )
-    );
-  };
+        setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+                task.id === taskId
+                    ? { ...task, completed: !task.completed }
+                    : task
+            )
+        );
+    };
 
     const value = { tasks, addTask, removeTask, updateTask, sortTasks, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle, toggleTaskCompleted };
 

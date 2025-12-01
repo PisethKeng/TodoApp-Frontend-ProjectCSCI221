@@ -1,5 +1,6 @@
+// src/pages/Register.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom"; // ⬅️ use react-router-dom
 
 export default function Register() {
   const navigate = useNavigate();
@@ -22,9 +23,25 @@ export default function Register() {
       return;
     }
 
-    // Simulate registration logic
-    localStorage.setItem("user", email);
-    navigate("/dashboard");
+    // Get existing users (or empty array)
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check if email already exists
+    const userExists = storedUsers.some((user) => user.email === email);
+    if (userExists) {
+      setError("Email is already registered.");
+      return;
+    }
+
+    // Add new user
+    const newUser = { email, password };
+    const updatedUsers = [...storedUsers, newUser];
+
+    // Save users array back to localStorage
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+
+    // Redirect to login
+    navigate("/login");
   };
 
   return (

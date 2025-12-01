@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import SideBar from "../components/SideBar";
 import { useTasks } from "../context/TaskProvider";
 
-
 export default function Calendar() {
     const { tasks } = useTasks();
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -60,60 +59,79 @@ export default function Calendar() {
         });
     }
 
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
 
     const todayKey = new Date().toISOString().split('T')[0];
 
     return (
-        <div className="min-h-screen flex justify-start items-start bg-[#FBFBF9]">
-            <div className="w-full max-w-[90%] p-8 ml-6 mt-2 gap-12 flex">
-                <SideBar />
+        <div className="min-h-screen bg-[#FBFBF9] flex justify-center">
+            <div className="w-full max-w-6xl px-4 py-6 md:px-8 md:py-10">
+                <div className="flex flex-col md:flex-row gap-6 md:gap-12">
+                    <SideBar />
 
-                {/* Calendar Content */}
-                <div className="flex-1">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-8">
-                        <h1 className="text-3xl font-semibold">
-                            {monthNames[month]} <span className="font-light">{year}</span>
-                        </h1>
+                    {/* Calendar Content */}
+                    <div className="flex-1">
+                        {/* Header */}
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3">
+                            <h1 className="text-2xl sm:text-3xl font-semibold">
+                                {monthNames[month]} <span className="font-light">{year}</span>
+                            </h1>
 
-                        <div className="flex gap-3">
-                            <button onClick={prevMonth} className="p-2 rounded-full hover:bg-gray-100">
-                                <ChevronLeft size={20} />
-                            </button>
-                            <button onClick={nextMonth} className="p-2 rounded-full hover:bg-gray-100">
-                                <ChevronRight size={20} />
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Grid */}
-                    <div className="grid grid-cols-7 border-t border-l bg-white rounded-xl overflow-hidden shadow-sm">
-                        {/* Weekday Headers */}
-                        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                            <div key={day} className="p-3 bg-[#0D9488] border-r border-black text-sm font-medium text-white">
-                                {day}
+                            <div className="flex gap-3 self-start sm:self-auto">
+                                <button
+                                    onClick={prevMonth}
+                                    className="p-2 rounded-full hover:bg-gray-100 border border-gray-200"
+                                >
+                                    <ChevronLeft size={20} />
+                                </button>
+                                <button
+                                    onClick={nextMonth}
+                                    className="p-2 rounded-full hover:bg-gray-100 border border-gray-200"
+                                >
+                                    <ChevronRight size={20} />
+                                </button>
                             </div>
-                        ))}
+                        </div>
 
-                        {/* Days Loop */}
-                        {daysArray.map((dateObj, idx) => {
-                            const dateString = `${dateObj.year}-${String(dateObj.month + 1).padStart(2, '0')}-${String(dateObj.day).padStart(2, '0')}`;
+                        {/* Grid Wrapper (scrollable on small screens) */}
+                        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+                            <div className="overflow-x-auto">
+                                <div className="min-w-[700px] grid grid-cols-7 border-t border-l">
+                                    {/* Weekday Headers */}
+                                    {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+                                        <div
+                                            key={day}
+                                            className="p-3 bg-[#0D9488] border-r border-black text-xs sm:text-sm font-medium text-white text-center"
+                                        >
+                                            {day}
+                                        </div>
+                                    ))}
 
-                            // Filter tasks to exclude completed ones
-                            const dayTasks = tasks.filter(task => task.duedate === dateString && !task.completed);
+                                    {/* Days Loop */}
+                                    {daysArray.map((dateObj, idx) => {
+                                        const dateString = `${dateObj.year}-${String(dateObj.month + 1).padStart(2, '0')}-${String(dateObj.day).padStart(2, '0')}`;
 
-                            return (
-                                <CalendarDay
-                                    key={idx}
-                                    dayNumber={dateObj.day}
-                                    isCurrentMonth={dateObj.isCurrentMonth}
-                                    events={dayTasks}
-                                    isToday={dateString === todayKey}
-                                />
-                            );
-                        })}
+                                        // Filter tasks to exclude completed ones
+                                        const dayTasks = tasks.filter(
+                                            task => task.duedate === dateString && !task.completed
+                                        );
+
+                                        return (
+                                            <CalendarDay
+                                                key={idx}
+                                                dayNumber={dateObj.day}
+                                                isCurrentMonth={dateObj.isCurrentMonth}
+                                                events={dayTasks}
+                                                isToday={dateString === todayKey}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,13 +154,18 @@ function CalendarDay({ dayNumber, isCurrentMonth, events = [], isToday }) {
     };
 
     return (
-        <div className={`h-27.5 p-2 border-r border-b ${!isCurrentMonth ? "bg-gray-50 text-gray-400" : "bg-white"}`}>
+        <div
+            className={`p-2 border-r border-b ${
+                !isCurrentMonth ? "bg-gray-50 text-gray-400" : "bg-white"
+            }`}
+        >
             <div className="flex justify-between">
                 <span
-                    className={`text-sm ${isToday
+                    className={`text-xs sm:text-sm ${
+                        isToday
                             ? "w-6 h-6 flex items-center justify-center rounded-full bg-black text-white font-semibold"
                             : ""
-                        }`}
+                    }`}
                 >
                     {dayNumber}
                 </span>
@@ -153,7 +176,7 @@ function CalendarDay({ dayNumber, isCurrentMonth, events = [], isToday }) {
                 {events.map((ev, idx) => (
                     <div
                         key={idx}
-                        className={`text-xs px-2 py-1 rounded-sm truncate ${getCategoryColor(ev.category)}`}
+                        className={`text-[10px] sm:text-xs px-2 py-1 rounded-sm truncate ${getCategoryColor(ev.category)}`}
                         title={ev.title}
                     >
                         {ev.title}
