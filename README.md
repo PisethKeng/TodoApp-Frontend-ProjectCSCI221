@@ -28,8 +28,8 @@ A task management app built with React.js, allowing users to add, edit, delete, 
 - **Utilities**: UUID, localStorage
 
 ## Folder Structure
-- `src/components`: Reusable components like `SideBar` and `TaskCreation`.
-- `src/pages`: Page components like `Home`, `Dashboard`, `Login` and `Calendar`.
+- `src/components`: Reusable components like `SideBar`, `TaskCreation`, `ProtectedRoute` and `Dashboard`.
+- `src/pages`: Page components like `Home`, `Register`, `Login`, `EditTask` and `Calendar`.
 - `src/context`: Context for managing global state (`TaskProvider`).
 - `public/`: Static assets.
 
