@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import SideBar from "../components/SideBar";
-import { useTask } from "../context/TaskContext";
+import { useTasks } from "../context/TaskProvider";
 
 export default function Calendar() {
-    const { tasks } = useTask();
+    const { tasks } = useTasks();
     const [currentDate, setCurrentDate] = useState(new Date());
 
     const nextMonth = () => {
@@ -65,13 +65,9 @@ export default function Calendar() {
     const todayKey = new Date().toISOString().split('T')[0];
 
     return (
-        <div className="min-h-screen bg-[#FBFBF9] flex justify-center items-start py-10">
-            <div className="flex w-[90%] max-w-[1400px] gap-10">
-
-                {/* Sidebar */}
-                <div className="w-72">
-                    <SideBar />
-                </div>
+        <div className="min-h-screen flex justify-start items-start bg-[#FBFBF9]">
+            <div className="w-full max-w-[90%] p-8 ml-6 mt-2 gap-12 flex">
+                <SideBar />
 
                 {/* Calendar Content */}
                 <div className="flex-1">
@@ -95,7 +91,7 @@ export default function Calendar() {
                     <div className="grid grid-cols-7 border-t border-l bg-white rounded-xl overflow-hidden shadow-sm">
                         {/* Weekday Headers */}
                         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-                            <div key={day} className="p-3 bg-gray-50 border-r border-b text-sm font-medium text-gray-600">
+                            <div key={day} className="p-3 bg-[#0D9488] border-r border-black text-sm font-medium text-white">
                                 {day}
                             </div>
                         ))}
@@ -138,7 +134,7 @@ function CalendarDay({ dayNumber, isCurrentMonth, events = [], isToday }) {
     };
 
     return (
-        <div className={`h-32 p-2 border-r border-b ${!isCurrentMonth ? "bg-gray-50 text-gray-400" : "bg-white"}`}>
+        <div className={`h-27.5 p-2 border-r border-b ${!isCurrentMonth ? "bg-gray-50 text-gray-400" : "bg-white"}`}>
             <div className="flex justify-between">
                 <span
                     className={`text-sm ${isToday

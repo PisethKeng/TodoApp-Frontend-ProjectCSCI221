@@ -4,8 +4,6 @@ import { CalendarDays, ArrowLeft } from "lucide-react";
 import { useTasks } from "../context/TaskProvider";
 
 export default function EditTask() {
-
-
   const { id } = useParams();
   const navigate = useNavigate();
   const { tasks, updateTask } = useTasks();

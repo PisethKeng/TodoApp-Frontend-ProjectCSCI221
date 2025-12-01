@@ -2,18 +2,19 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import SideBar from '../components/SideBar'
 import { useTasks } from "../context/TaskProvider";
-import Dashboard from './dashboard';
+import Dashboard from './Dashboard';
 
 export default function Home() {
   const [ priorityValue, setPriorityValue ] = useState("all");
   const [ categoryValue, setCategoryValue ] = useState("all");
   const [ sortValue, setSortValue ] = useState("all");
-  const { tasks, removeTask, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle, toggleTaskCompleted } = useTasks();
+  const { tasks, removeTask, sortTasks, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle, toggleTaskCompleted } = useTasks();
   const [ filterTasks, setFilterTasks ] = useState(tasks);
   const [ taskStatus, setTaskStatus ] = useState(tasks.length > 0);
 
   useEffect(() => {
     let result = [...tasks];
+    result = sortTasks(result);
 
     if (priorityValue !== "all") {
       result = getTasksByPriority(priorityValue, result);
@@ -33,12 +34,12 @@ export default function Home() {
     setFilterTasks(result);
     setTaskStatus(result.length > 0);
 
-  }, [tasks, priorityValue, categoryValue, sortValue, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle]);
+  }, [tasks, priorityValue, categoryValue, sortTasks, sortValue, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle]);
 
   return (
     <>
     <div className="min-h-screen flex justify-start items-start bg-[#FBFBF9]">
-      <div className="w-full max-w-6xl p-8 gap-8 flex">
+      <div className="w-full max-w-[90%] p-8 ml-6 mt-2 gap-12 flex">
         {/* Sidebar */}
         <SideBar />
         {/* Dashboard wrapper card */}
@@ -55,13 +56,13 @@ export default function Home() {
             </h3>
 
             {/* Filter Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Task Priority */}
               <div className="flex flex-col gap-1">
-                <label className="text-sm text-gray-600">Priority</label>
+                <label className="text-sm font-medium text-gray-600">Priority</label>
                 <select
                   defaultValue="all"
-                  className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none"
+                  className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]"
                   onChange={e => setPriorityValue(e.target.value)}
                 >
                   <option value="all">All</option>
@@ -73,10 +74,10 @@ export default function Home() {
 
               {/* Category */}
               <div className="flex flex-col gap-1">
-                <label className="text-sm text-gray-600">Category</label>
+                <label className="text-sm font-medium text-gray-600">Category</label>
                 <select
                   defaultValue="all"
-                  className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none"
+                  className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]"
                   onChange={e => setCategoryValue(e.target.value)}
                 >
                   <option value="all">All</option>
@@ -90,10 +91,10 @@ export default function Home() {
 
               {/* Sort By */}
               <div className="flex flex-col gap-1">
-                <label className="text-sm text-gray-600">Sort By</label>
+                <label className="text-sm font-medium text-gray-600">Sort By</label>
                 <select
                   defaultValue="all"
-                  className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none"
+                  className="border border-gray-300 rounded-lg px-3 py-2 bg-white text-gray-800 text-sm focus:outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]"
                   onChange={e => setSortValue(e.target.value)}
                 >
                   <option value="all">All</option>
@@ -105,7 +106,7 @@ export default function Home() {
           </div>
           {/* Task display box */}
           {!taskStatus && (
-            <div className="h-[545px] bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-200 mt-6">
+            <div className="h-[530px] bg-white rounded-xl shadow-sm p-6 border-2 border-dashed border-gray-200 mt-6">
               <h3 className="text-base font-semibold text-gray-800">Tasks</h3>
               <div id="task-list-placeholder" className="h-full flex flex-col items-center justify-center text-gray-500 text-xl">
                 No tasks to display
@@ -113,7 +114,7 @@ export default function Home() {
             </div>
           )}
           {taskStatus && (
-            <div className="max-h-[545px] overflow-y-auto space-y-4">
+            <div className="max-h-[535px] rounded-xl overflow-y-auto space-y-4">
               {filterTasks.map(task => (
                 <Dashboard key={task.id} tasks={task} removeTask={removeTask} toggleTaskCompleted={toggleTaskCompleted} />
               ))}

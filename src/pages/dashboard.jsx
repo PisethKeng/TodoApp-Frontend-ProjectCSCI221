@@ -1,4 +1,4 @@
-import { Trash2, SquarePen, CalendarDays, CircleCheckBig } from "lucide-react";
+import { Trash2, SquarePen, CalendarDays, CircleCheckBig, Circle } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export default function Dashboard({ tasks, removeTask, toggleTaskCompleted }) {
@@ -7,12 +7,13 @@ export default function Dashboard({ tasks, removeTask, toggleTaskCompleted }) {
 
   return (
     <div className="w-full mb-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex items-center justify-between gap-4 hover:shadow-md transition">
+      <div className={`bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex items-center justify-between gap-4 hover:shadow-md transition ${completed ? "opacity-60 bg-gray-50" : ""}`}>
         <div className="flex items-start gap-4">
           <button className="mt-1 text-teal-600 hover:text-teal-700 transition"
           onClick={() => toggleTaskCompleted(id)}
           >
-            <CircleCheckBig className="w-6 h-6" />
+            {completed && <CircleCheckBig className="w-6 h-6 cursor-pointer" />}
+            {!completed && <Circle className="w-6 h-6 cursor-pointer" />}
           </button>
 
           <div>

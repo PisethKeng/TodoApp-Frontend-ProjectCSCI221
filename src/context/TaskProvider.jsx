@@ -18,7 +18,7 @@ export function TaskProvider({ children }) {
         const task = {
             ...newTask,
             id: v4(),
-            // createdAt: new Date().toISOString()
+            createdAt: new Date().toISOString()
         };
         setTasks((prevTasks) => [...prevTasks, task]);
     };
@@ -34,6 +34,13 @@ export function TaskProvider({ children }) {
             )
         );
     };
+
+    const sortTasks = (tasksToSort) => {
+        return tasksToSort.sort((a, b) => {
+            if (a.completed && !b.completed) return 1;
+            if (!a.completed && b.completed) return -1;
+        })
+    }
 
     const getTasksByPriority = (priority, tasks) => {
         return tasks.filter(task => task.priority === priority);
@@ -62,6 +69,7 @@ export function TaskProvider({ children }) {
             return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
         });
     };
+    
     // added task complete function
     const toggleTaskCompleted = (taskId) => {
     setTasks((prevTasks) =>
@@ -73,7 +81,7 @@ export function TaskProvider({ children }) {
     );
   };
 
-    const value = { tasks, addTask, removeTask, updateTask, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle, toggleTaskCompleted };
+    const value = { tasks, addTask, removeTask, updateTask, sortTasks, getTasksByPriority, getTasksByCategory, getTasksByDueDate, getTasksByTitle, toggleTaskCompleted };
 
     return (
         <TaskContext.Provider value={value}>
