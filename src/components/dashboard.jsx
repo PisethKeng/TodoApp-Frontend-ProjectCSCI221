@@ -1,6 +1,7 @@
 import { Trash2, SquarePen, CalendarDays, CircleCheckBig, Circle } from "lucide-react";
 import { useNavigate } from "react-router";
 
+
 export default function Dashboard({ tasks, removeTask, toggleTaskCompleted }) {
   const navigate = useNavigate();
   const { id, title, description, category, priority, duedate, completed } = { ...tasks };

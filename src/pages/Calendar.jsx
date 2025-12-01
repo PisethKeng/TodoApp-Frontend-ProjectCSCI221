@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import SideBar from "../components/SideBar";
 import { useTasks } from "../context/TaskProvider";
 
+
 export default function Calendar() {
     const { tasks } = useTasks();
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -100,7 +101,8 @@ export default function Calendar() {
                         {daysArray.map((dateObj, idx) => {
                             const dateString = `${dateObj.year}-${String(dateObj.month + 1).padStart(2, '0')}-${String(dateObj.day).padStart(2, '0')}`;
 
-                            const dayTasks = tasks.filter(task => task.duedate === dateString);
+                            // Filter tasks to exclude completed ones
+                            const dayTasks = tasks.filter(task => task.duedate === dateString && !task.completed);
 
                             return (
                                 <CalendarDay

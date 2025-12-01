@@ -2,8 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import SideBar from '../components/SideBar'
 import { useTasks } from "../context/TaskProvider";
-import Dashboard from './Dashboard';
-
+import Dashboard from '../components/dashboard';
+import { LayoutDashboard } from 'lucide-react';
 export default function Home() {
   const [ priorityValue, setPriorityValue ] = useState("all");
   const [ categoryValue, setCategoryValue ] = useState("all");
@@ -46,6 +46,7 @@ export default function Home() {
         <div className="flex-1">
           {/* Dashboard Text */}
           <div className="text-3xl font-semibold mb-6">
+            <LayoutDashboard className="inline w-8 h-8 mr-2 text-gray-600 mb-1" />
             Dashboard
           </div>
           {/* Priority / Filters card */}
