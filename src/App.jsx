@@ -7,11 +7,14 @@ import Dashboard from './components/dashboard'
 import EditTask from './pages/EditTask'
 import { TaskProvider } from './context/TaskProvider'
 import Login from './pages/Login'
+import Register from './pages/Register'
+
 
 function App() {
   return (
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={
           <TaskProvider>
             <Home />
