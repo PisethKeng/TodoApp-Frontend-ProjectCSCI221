@@ -3,34 +3,20 @@ import { Link } from 'react-router'
 
 export default function SideBar() {
   return (
-    <>
-        {/* Sidebar */}
-        <div className="h-[480px] w-[240px] bg-white flex flex-col items-center p-4 rounded-2xl shadow-xl">
-          {/* Title */}
-          <h2 className="text-xl font-semibold mb-3 self-start ml-4">
-            To do List
-          </h2>
-          <hr className="border border-dotted border-gray-300 w-full mb-6" />
-
-          {/* Menu Items */}
-          <div className="w-full text-black px-2 space-y-4">
-            <Link to="/">
-              <p className="hover:bg-green-600 hover:text-white transition p-4 rounded-2xl cursor-pointer">
-                Dashboard
-              </p>
-            </Link>
-            <Link to="/add-task">
-              <p className="hover:bg-green-600 hover:text-white transition p-4 rounded-2xl cursor-pointer">
-                Add task
-              </p>
-            </Link>
-            <Link to="/calendar">
-              <p className="hover:bg-green-600 hover:text-white transition p-4 rounded-2xl cursor-pointer">
-                Calendar
-              </p>
-            </Link>
-          </div>
-        </div>
-    </>
+    <div className="w-[300px] flex flex-col items-start h-195 rounded-2xl bg-white py-7 px-3 px-10 shadow-sm">
+      <h2 className="text-[28px] font-bold mb-6">To do list</h2>
+      <hr className="border-dotted border-black w-full mb-6" />
+      <div className="w-full text-black font-semibold text-[18px] space-y-4">
+        <Link to="/" className="block">
+          <p className="duration-400 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Dashboard</p>
+        </Link>
+        <Link to="/addtask" className="block">
+          <p className="duration-400 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Add task</p>
+        </Link>
+        <Link to="/calendar" className="block">
+          <p className="duration-400 ease-in-out hover:bg-[#0D9488] hover:text-white p-4 rounded-xl cursor-pointer transition-colors">Calendar</p>
+        </Link>
+      </div>
+    </div>
   )
 }

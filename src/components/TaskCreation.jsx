@@ -1,13 +1,13 @@
 import { useState } from "react";
-
-// Added styling classes for better UI logic stays the same 
+import { X } from 'lucide-react';
 
 export default function TaskCreation({ onCreate }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [category, setCategory] = useState("");
+  const [priority, setPriority] = useState("medium");
+  const [category, setCategory] = useState("others");
   const [duedate, setDuedate] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState({error: false, pass: false});
 
   const clear = () => {
     setTitle("");
@@ -19,22 +19,51 @@ export default function TaskCreation({ onCreate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newTask = {
-      title,
-      description: description || "",
-      category: category || "Other",
-      priority: priority || "Medium",
-      duedate: duedate || null,
+    if (!title.trim()) {
+      clear();
+      return setIsSubmitted({error: true});
+    }
+    else {
+      const newTask = {
+        title: title.trim(),
+        description: description || "",
+        category: category || "others",
+        priority: priority || "medium",
+        duedate: duedate || null,
+      };
+      onCreate(newTask);
+      clear();
+      setIsSubmitted({pass: true});
     };
-    onCreate(newTask);
-    clear();
-  };
+    }
   
   return (
     <form
       onSubmit={handleSubmit}
     >
-      <div className="mx-auto mt-6 max-w-2xl rounded-2xl bg-white p-6 shadow-sm space-y-4">
+      {isSubmitted.pass && 
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative">
+          <p>
+            <strong className="font-bold">Success! </strong>
+            Your new task has been added successfully.
+          </p>
+          <span className="absolute top-0 bottom-0 right-0 px-6 py-2.5">
+          <button className="w-4 h-4 cursor-pointer"><X onClick={() => setIsSubmitted({error: false, pass: false})}/></button>
+          </span>            
+        </div>
+      }
+      {isSubmitted.error && 
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative">
+          <p>
+            <strong className="font-bold">Invalid! </strong>
+            Please fill in the title field.
+          </p>
+          <span className="absolute top-0 bottom-0 right-0 px-6 py-2.5">
+          <button className="w-4 h-4 cursor-pointer"><X onClick={() => setIsSubmitted({error: false, pass: false})}/></button>
+          </span>            
+        </div>
+      }
+      <div className="mt-6 rounded-2xl bg-white p-7 shadow-sm space-y-4">
         <label className="flex flex-col gap-2 text-base font-medium text-slate-600">
           <span>Title</span>
           <input
@@ -48,7 +77,7 @@ export default function TaskCreation({ onCreate }) {
         </label>
       </div>
 
-      <div className="mx-auto mt-6 max-w-2xl rounded-2xl bg-white p-6 shadow-sm space-y-4">
+      <div className="mx-auto mt-6 rounded-2xl bg-white p-7 shadow-sm space-y-4">
         <div>
           <label className="flex flex-col gap-2 text-base font-medium text-slate-600">
             <span>Description</span>
@@ -56,8 +85,9 @@ export default function TaskCreation({ onCreate }) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Task description"
-              className="w-full min-h-[80px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488]"
-            ></textarea>
+              className={`w-full min-h-[60px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 placeholder-slate-400 shadow-sm outline-none focus:border-[#0D9488] focus:ring-2 focus:ring-[#0D9488] 
+                ${(isSubmitted.pass || isSubmitted.error) ? 'h-[70px]' : 'h-[140px]'}`
+              }></textarea>
           </label>
         </div>
 
@@ -91,7 +121,7 @@ export default function TaskCreation({ onCreate }) {
                 <option value="work">Work</option>
                 <option value="study">Study</option>
                 <option value="health">Health</option>
-                <option value="other">Other</option>
+                <option value="others">Others</option>
               </select>
             </label>
           </div>

@@ -4,7 +4,9 @@ import Home from './pages/Home'
 import Login from "./pages/Login";
 import AddTask from './pages/AddTask'
 import Calendar from './pages/Calendar'
-import Dashboard from './pages/dashboard'
+import Dashboard from './components/dashboard'
+import EditTask from './pages/EditTask'
+import { TaskProvider } from './context/TaskProvider'
 
 function App() {
   return (
