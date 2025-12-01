@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import AddTask from './pages/AddTask'
 import Calendar from './pages/Calendar'
 import Dashboard from './pages/dashboard'
+import Register from './pages/Register'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/addtask" element={<AddTask />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
   )
 }
